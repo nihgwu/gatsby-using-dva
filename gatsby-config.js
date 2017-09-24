@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/gatsby-using-dva',
   siteMetadata: {
     title: `Gatsby Dva`,
   },

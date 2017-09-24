@@ -3,13 +3,6 @@
   "description": "Gatsby example site that shows use of Dva.",
   "version": "1.0.0",
   "author": "Neo <nighwu@live.com>",
-  "dependencies": {
-    "dva-core": "^1.1.0",
-    "gatsby": "^1.9.42",
-    "gatsby-link": "^1.6.15",
-    "gatsby-plugin-react-helmet": "^1.0.5",
-    "react-redux": "^5.0.6"
-  },
   "keywords": [
     "gatsby",
     "dva"
@@ -17,14 +10,24 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "start": "gatsby develop",
-    "build": "gatsby build",
+    "start": "gatsby develop -o",
+    "build": "gatsby build --prefix-paths",
+    "deploy": "rimraf .cache public && gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js'",
     "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "dva-core": "^1.1.0",
+    "gatsby": "^1.9.42",
+    "gatsby-link": "^1.6.15",
+    "gatsby-plugin-react-helmet": "^1.0.5",
+    "react-redux": "^5.0.6"
+  },
   "devDependencies": {
-    "prettier": "^1.6.1"
+    "gh-pages": "^1.0.0",
+    "prettier": "^1.6.1",
+    "rimraf": "^2.6.2"
   }
 }

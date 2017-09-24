@@ -1,3 +1,5 @@
+import { delay } from '../utils'
+
 export default {
   namespace: 'app',
   state: {
@@ -9,6 +11,12 @@ export default {
     },
     decrement(state) {
       return { count: state.count - 1 }
+    },
+  },
+  effects: {
+    *delayed({ payload: { timeout } }, { put }) {
+      yield delay(timeout)
+      yield put({ type: 'increment' })
     },
   },
 }

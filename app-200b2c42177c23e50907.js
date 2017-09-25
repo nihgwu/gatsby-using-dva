@@ -1166,6 +1166,7 @@ webpackJsonp([231608221292675],{
 	exports.replaceRouterComponent = function (_ref) {
 	  var history = _ref.history;
 	
+	  app.setHistory(history);
 	  var ConnectedRouterWrapper = function ConnectedRouterWrapper(_ref2) {
 	    var children = _ref2.children;
 	    return app.start(_react2.default.createElement(
@@ -8484,6 +8485,18 @@ webpackJsonp([231608221292675],{
 	      yield (0, _utils.delay)(timeout);
 	      yield put({ type: 'increment' });
 	    }
+	  },
+	  subscriptions: {
+	    setup: function setup(_ref3) {
+	      var history = _ref3.history,
+	          dispatch = _ref3.dispatch;
+	
+	      history.listen(function (_ref4) {
+	        var pathname = _ref4.pathname;
+	
+	        console.log(pathname);
+	      });
+	    }
 	  }
 	};
 	module.exports = exports['default'];
@@ -8568,6 +8581,14 @@ webpackJsonp([231608221292675],{
 	      container
 	    );
 	  };
+	  app.setHistory = function (history) {
+	    var oldListen = history.listen;
+	    history.listen = function (callback) {
+	      callback(history.location);
+	      return oldListen.call(history, callback);
+	    };
+	    app._history = history;
+	  };
 	
 	  return app;
 	};
@@ -8607,4 +8628,4 @@ webpackJsonp([231608221292675],{
 /***/ })
 
 });
-//# sourceMappingURL=app-6de01c4b8d367a0fbc4d.js.map
+//# sourceMappingURL=app-200b2c42177c23e50907.js.map

@@ -13,13 +13,6 @@ const app = dva({
 
 app.model(appModal)
 
-exports.replaceRouterComponent = ({ history }) => {
-  const ConnectedRouterWrapper = ({ children }) =>
-    app.start(<Router history={history}>{children}</Router>)
-
-  return ConnectedRouterWrapper
-}
-
 exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
   const ConnectedBody = () => app.start(bodyComponent)
   replaceBodyHTMLString(renderToString(<ConnectedBody />))

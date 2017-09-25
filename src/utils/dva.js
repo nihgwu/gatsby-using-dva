@@ -11,6 +11,14 @@ export default function(opts = {}) {
 
     return <Provider store={app._store}>{container}</Provider>
   }
+  app.setHistory = function(history) {
+    const oldListen = history.listen
+    history.listen = callback => {
+      callback(history.location)
+      return oldListen.call(history, callback)
+    }
+    app._history = history
+  }
 
   return app
 }

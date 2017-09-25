@@ -14,6 +14,7 @@ const app = dva({
 app.model(appModal)
 
 exports.replaceRouterComponent = ({ history }) => {
+  app.setHistory(history)
   const ConnectedRouterWrapper = ({ children }) =>
     app.start(<Router history={history}>{children}</Router>)
 

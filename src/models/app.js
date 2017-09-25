@@ -19,4 +19,11 @@ export default {
       yield put({ type: 'increment' })
     },
   },
+  subscriptions: {
+    setup({ history, dispatch }) {
+      history.listen(({ pathname }) => {
+        console.log(pathname)
+      })
+    },
+  },
 }

@@ -922,6 +922,10 @@ webpackJsonp([231608221292675],{
 	
 	var _pages2 = _interopRequireDefault(_pages);
 	
+	var _redirects = __webpack_require__("./.cache/redirects.json");
+	
+	var _redirects2 = _interopRequireDefault(_redirects);
+	
 	var _componentRenderer = __webpack_require__("./.cache/component-renderer.js");
 	
 	var _componentRenderer2 = _interopRequireDefault(_componentRenderer);
@@ -947,6 +951,34 @@ webpackJsonp([231608221292675],{
 	window.asyncRequires = _asyncRequires2.default;
 	window.___loader = _loader2.default;
 	window.matchPath = _reactRouterDom.matchPath;
+	
+	var history = (0, _createBrowserHistory2.default)();
+	
+	// Convert to a map for faster lookup in maybeRedirect()
+	var redirectMap = _redirects2.default.reduce(function (map, redirect) {
+	  map[redirect.fromPath] = redirect;
+	  return map;
+	}, {});
+	
+	var maybeRedirect = function maybeRedirect(pathname) {
+	  var redirect = redirectMap[pathname];
+	
+	  if (redirect != null) {
+	    var pageResources = _loader2.default.getResourcesForPathname(pathname);
+	
+	    if (pageResources != null) {
+	      console.error("The route \"" + pathname + "\" matches both a page and a redirect; this is probably not intentional.");
+	    }
+	
+	    history.replace(redirect.toPath);
+	    return true;
+	  } else {
+	    return false;
+	  }
+	};
+	
+	// Check for initial page-load redirect
+	maybeRedirect(window.location.pathname);
 	
 	// Let the site/plugins run code very early.
 	(0, _apiRunnerBrowser.apiRunnerAsync)("onClientEntry").then(function () {
@@ -994,8 +1026,6 @@ webpackJsonp([231608221292675],{
 	  // window.___loadScriptsForPath = loadScriptsForPath
 	  window.___navigateTo = navigateTo;
 	
-	  var history = (0, _createBrowserHistory2.default)();
-	
 	  // Call onRouteUpdate on the initial page load.
 	  (0, _apiRunnerBrowser.apiRunner)("onRouteUpdate", {
 	    location: history.location,
@@ -1007,7 +1037,9 @@ webpackJsonp([231608221292675],{
 	      window.___history = history;
 	
 	      history.listen(function (location, action) {
-	        (0, _apiRunnerBrowser.apiRunner)("onRouteUpdate", { location: location, action: action });
+	        if (!maybeRedirect(location.pathname)) {
+	          (0, _apiRunnerBrowser.apiRunner)("onRouteUpdate", { location: location, action: action });
+	        }
 	      });
 	    }
 	  }
@@ -1076,6 +1108,13 @@ webpackJsonp([231608221292675],{
 	    });
 	  });
 	});
+
+/***/ }),
+
+/***/ "./.cache/redirects.json":
+/***/ (function(module, exports) {
+
+	module.exports = []
 
 /***/ }),
 
@@ -8628,4 +8667,4 @@ webpackJsonp([231608221292675],{
 /***/ })
 
 });
-//# sourceMappingURL=app-200b2c42177c23e50907.js.map
+//# sourceMappingURL=app-b84a456762cc783a90c1.js.map

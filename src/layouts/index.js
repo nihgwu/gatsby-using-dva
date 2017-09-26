@@ -27,8 +27,15 @@ const Header = () => (
             textDecoration: 'none',
           }}
         >
-          Gatsby
+          Gatsby using Dva
         </Link>
+        <a
+          style={{ float: 'right', textDecoration: 'none' }}
+          href="https://github.com/nihgwu/gatsby-using-dva"
+          target="_blank"
+        >
+          Github
+        </a>
       </h1>
     </div>
   </div>
